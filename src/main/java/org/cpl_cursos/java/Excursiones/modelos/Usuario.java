@@ -1,0 +1,42 @@
+package org.cpl_cursos.java.Excursiones.modelos;
+
+import jakarta.persistence.*;
+import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.util.Date;
+import java.util.Set;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@Entity
+@Table(name = "Usuarios")
+public class Usuario {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @NonNull
+    private String emilio;
+    @NonNull
+    private String clave;
+
+    @NonNull
+    private String nombre;
+    private String rol;
+    private String foto;
+    private Boolean activo = false;
+    @NonNull
+    @Column(name = "creado_el")
+    @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern="yyyy-MM-dd")
+    private Date creadoEl;
+
+    @OneToMany(mappedBy = "usu")
+    private Set<Reserva> reservas;
+
+    @OneToMany(mappedBy = "usuOpina")
+    private Set<Contenido> contenidos;
+}
