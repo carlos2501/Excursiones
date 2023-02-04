@@ -14,7 +14,7 @@ import java.util.Set;
 @Setter
 @ToString
 @Entity
-@Table(name = "org/cpl_cursos/java/Excursiones")
+@Table(name = "excursiones")
 public class Excursion {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,12 +24,14 @@ public class Excursion {
     private String apodo;
     private Byte duracion;
     private Byte maxPersonas;
-    private Byte dificultad;
+    private String dificultad;
     private Double puntosMedia;
     private Integer nroPuntuaciones;
     private Double precio;
     private Double descuento;
     private String resumen;
+    @Lob    // large object. Para poder almacenar un TEXT
+    @Column(columnDefinition = "MEDIUMTEXT")
     private String descripcion;
     private String imgPortada;
     @NonNull

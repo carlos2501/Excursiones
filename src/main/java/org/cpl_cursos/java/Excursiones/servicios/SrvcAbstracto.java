@@ -1,7 +1,17 @@
 package org.cpl_cursos.java.Excursiones.servicios;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.core.JsonFactory;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.databind.MappingIterator;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.sql.SQLException;
 import java.util.*;
 
 /*
@@ -35,6 +45,9 @@ public abstract class SrvcAbstracto<E,ID, REPO extends JpaRepository> {
     /*
      ===============  Ahora añadimos los métodos a publicar  =================
     */
+    /*
+     ---------------- Para obtener datos ---------------
+    */
     public Set<E> listarTodos() {
         Set<E> eSet = new HashSet<E>(this.repo.findAll());
         return eSet;
@@ -44,12 +57,14 @@ public abstract class SrvcAbstracto<E,ID, REPO extends JpaRepository> {
     public Optional<E> buscarPorId(ID id) {
         return this.repo.findById(id);
     }
-
+    /*
+     ------------- Para guardar ---------------
+    */
     public void guardar(E e) {
         this.repo.save(e);
     }
 
-    public void guardarSet(Set<E> eSet ) {
+    public void guardarSet(Set<E> eSet ) throws SQLException {
         /*  Para recorrer un Set necesitamos un iterador que es una especie de cursor que permite ir obteniendo cada
             uno de los elementos del Set.
             Al inicializarse se coloca DELANTE del primero, de forma que la primera vez que se llama a su método next()
@@ -59,10 +74,14 @@ public abstract class SrvcAbstracto<E,ID, REPO extends JpaRepository> {
         // Mientras haya elementos en el set ...
         while (it.hasNext()) {
             // ... lo grabamos
-            this.repo.save(it.next());
+            E item = it.next();
+            System.out.println("Grabando... " + item);
+            this.repo.save(item);
         }
     }
-
+    /*
+        --------- Para eliminar ----------------
+    */
     public void eliminar(E e) {
         this.repo.delete(e);
     }
