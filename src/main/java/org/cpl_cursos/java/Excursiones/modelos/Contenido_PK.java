@@ -12,6 +12,8 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @ToString
+// Para utilizar una PK compuesta, es necesario agrupar todos los campos de la PK en una clase "empotrable" -embeddable-
+// Una vez creada, esta clase será la que se utilice com @Id de la clase final
 @Embeddable
 public class Contenido_PK implements Serializable {
     @Column(name="idUsuario", nullable = false)
