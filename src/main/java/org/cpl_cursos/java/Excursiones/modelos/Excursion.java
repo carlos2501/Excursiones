@@ -39,10 +39,10 @@ public class Excursion {
     private Date creatoEl;
 
     @OneToMany(mappedBy = "excur")
-    private Set<Reserva> reservas;
+    private Set<Reserva> reservas;      // contiene todos los objetos Reserva que se ha hecho de la excursión
 
     @OneToMany(mappedBy = "excurOpina")
-    private Set<Contenido> contenidos;
+    private Set<Contenido> contenidos;  // contiene todos los objetos Contenido de la excursión
 
 
 }

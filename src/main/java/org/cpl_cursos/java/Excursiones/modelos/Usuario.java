@@ -18,13 +18,12 @@ public class Usuario {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NonNull
-    private String emilio;
-    @NonNull
-    private String clave;
 
     @NonNull
+    private String emilio;
     private String nombre;
+    @NonNull
+    private String clave;
     private String rol;
     private String foto;
     private Boolean activo = false;
@@ -35,8 +34,8 @@ public class Usuario {
     private Date creadoEl;
 
     @OneToMany(mappedBy = "usu")
-    private Set<Reserva> reservas;
+    private Set<Reserva> reservas;  //contiene todas las reservas realizadas por el usuario
 
     @OneToMany(mappedBy = "usuOpina")
-    private Set<Contenido> contenidos;
+    private Set<Contenido> contenidos;  // contiene todas las opiniones y fotos subidas por el usuario
 }
