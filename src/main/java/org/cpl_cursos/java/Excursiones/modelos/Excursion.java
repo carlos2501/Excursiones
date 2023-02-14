@@ -40,10 +40,10 @@ public class Excursion {
     @DateTimeFormat(pattern="yyyy-MM-dd")
     private Date creatoEl;
 
-    @OneToMany(mappedBy = "excur")
+    @OneToMany(mappedBy = "excur", fetch=FetchType.LAZY)
     private Set<Reserva> reservas;      // contiene todos los objetos Reserva que se ha hecho de la excursión
 
-    @OneToMany(mappedBy = "excurOpina")
+    @OneToMany(mappedBy = "excurOpina", fetch=FetchType.LAZY)
     private Set<Contenido> contenidos;  // contiene todos los objetos Contenido de la excursión
 
 

@@ -18,12 +18,12 @@ public class Contenido implements Serializable {
 
     @ManyToOne
     @MapsId("idUsuario")
-    @JoinColumn(name="idUsuario")
+    @JoinColumn(name="id_Usuario")
     private Usuario usuOpina;
 
     @ManyToOne
     @MapsId("idExcursion")
-    @JoinColumn(name="idExcursion")
+    @JoinColumn(name="id_Excursion")
     private Excursion excurOpina;
 
     private String opinion;

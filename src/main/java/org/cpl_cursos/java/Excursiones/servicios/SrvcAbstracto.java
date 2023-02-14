@@ -1,21 +1,12 @@
 package org.cpl_cursos.java.Excursiones.servicios;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.core.JsonFactory;
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.databind.MappingIterator;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.sql.SQLException;
 import java.util.*;
 
 /*
-    Esta clase sirve de generalización de la implementación común para todas las entidades.
+    Esta clase sirve de generalización de la implementación común para todas las entidades (Factorización).
 
     Aquí ponemos la implementación de los métodos más habituales y que todos, o la mayoría, de los
     modelos deben utilizar.
@@ -33,10 +24,12 @@ public abstract class SrvcAbstracto<E,ID, REPO extends JpaRepository> {
 
     // definimos las variables internas para utilizar a partir del constructor.
     private final REPO repo;
+
     // ============ Constructor ==========
     protected SrvcAbstracto(REPO repo) {
         this.repo = repo;
     }
+
     // ============ Getter ==============
     public REPO getRepo() {
         return repo;
@@ -44,17 +37,18 @@ public abstract class SrvcAbstracto<E,ID, REPO extends JpaRepository> {
 
     /*
      ===============  Ahora añadimos los métodos a publicar  =================
+     La clase CrudRepository y expone la mayoría de los métodos, pero se replican aquí por si es necesario añadir o
+     modificar alguna funcionalidad en particular.
     */
     /*
      ---------------- Para obtener datos ---------------
     */
     public Set<E> listarTodos() {
-        Set<E> eSet = new HashSet<E>(this.repo.findAll());
-        return eSet;
-        // Se puede poner en una sola línea -> return (Set<E>) new HashSet<E>(this.repo.findAll());
+        return (Set<E>) new HashSet<E>(this.repo.findAll());
     }
 
     public Optional<E> buscarPorId(ID id) {
+        //Optional<E> e =  this.repo.findById(id);
         return this.repo.findById(id);
     }
     /*
@@ -78,11 +72,19 @@ public abstract class SrvcAbstracto<E,ID, REPO extends JpaRepository> {
             System.out.println("Grabando... " + item);
             this.repo.save(item);
         }
+        /* Se puede escribir con un for mejorado ...
+            for (E item : eSet) {
+                // ... lo grabamos
+                System.out.println("Grabando... " + item);
+                this.repo.save(item);
+            }
+         */
     }
     /*
         --------- Para eliminar ----------------
     */
     public void eliminar(E e) {
+        // TODO ¿qué se devuelve si el usuario no tiene Id o no existe?
         this.repo.delete(e);
     }
 
@@ -90,8 +92,8 @@ public abstract class SrvcAbstracto<E,ID, REPO extends JpaRepository> {
         // hacemos lo mismo que en guardarSet
         Iterator<E> it =eSet.iterator();
         while (it.hasNext()) {
-            eliminar(it.next());
-            // también se puede llamar directamente al método del repositorio ->this.repo.delete(it.next());
+            //eliminar(it.next());
+            this.repo.delete(it.next());
         }
     }
 

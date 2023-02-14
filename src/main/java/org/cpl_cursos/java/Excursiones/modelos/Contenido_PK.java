@@ -14,10 +14,10 @@ import java.time.LocalDate;
 @ToString
 @Embeddable
 public class Contenido_PK implements Serializable {
-    @Column(name="idUsuario", nullable = false)
+    @Column(name="id_Usuario", nullable = false)
     private Long idUsuario;
 
-    @Column(name="idExcursion", nullable = false)
+    @Column(name="id_Excursion", nullable = false)
     private Long idExcursion;
 
     @Column(name="fecha", nullable = false)

@@ -33,9 +33,9 @@ public class Usuario {
     @DateTimeFormat(pattern="yyyy-MM-dd")
     private Date creadoEl;
 
-    @OneToMany(mappedBy = "usu")
+    @OneToMany(mappedBy = "usu", fetch=FetchType.LAZY)
     private Set<Reserva> reservas;  //contiene todas las reservas realizadas por el usuario
 
-    @OneToMany(mappedBy = "usuOpina")
+    @OneToMany(mappedBy = "usuOpina", fetch=FetchType.LAZY)
     private Set<Contenido> contenidos;  // contiene todas las opiniones y fotos subidas por el usuario
 }
