@@ -13,10 +13,10 @@ import java.util.Objects;
 @Setter
 @Embeddable
 public class Reserva_PK implements Serializable {
-    @Column(name="idUsuario", nullable = false)
+    @Column(name="id_Usuario", nullable = false)
     private Long idUsuario;
 
-    @Column(name="idExcursion", nullable = false)
+    @Column(name="id_Excursion", nullable = false)
     private Long idExcursion;
 
     @Override

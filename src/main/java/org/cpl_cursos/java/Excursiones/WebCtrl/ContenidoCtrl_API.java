@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
@@ -21,20 +22,16 @@ import java.util.Set;
 @RestController
 @RequestMapping("/api/contenido")
 public class ContenidoCtrl_API {
-    // la variable srvc es una instancia de ReservaSrvcImpl, que a su vez extiende SrvcAbstracto, por lo que puede
+    // la variable srvc es una instancia de ReservaSrvcImpl, que a su vez extiende SrvcAbstracto, por lo que
     // se puede acceder a todos sus métodos
     @Autowired
     private ContenidoSrvcImpl srvc;
 
-    // ========= Contructor =============
-    //public ContenidoCtrl_API(ContenidoSrvcImpl srvc) {
-    //    this.srvc = srvc;
-    //}
     /*
           ============ Métodos para la gestión de las peticiones HTTP ===================
 
             Cada uno indica la ruta que "atiende" y el verbo de la misma (GET, POST, etc.)
-        */
+    */
     @GetMapping({"","/"})  // es la raiz de la ruta indicada en @RequestMapping
     public ResponseEntity<Set<Contenido>> listaContenidos() {
         Set<Contenido> listaCon = this.srvc.listarTodos();
@@ -53,6 +50,15 @@ public class ContenidoCtrl_API {
         // No hace falta que el parámetro sea opcional. SI no se indica el parámetro, se ejecuta la ruta raíz
         Optional<Contenido> res = this.srvc.buscarPorId(pk);
         return ResponseEntity.of(res);
+    }
+
+    @GetMapping("/fotos")
+    public ResponseEntity<List<Contenido>> leerFotos(){
+        List<Contenido> listaCon = this.srvc.buscarPorTipo((byte) 1);
+        if(listaCon.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(listaCon, HttpStatus.OK);
     }
     // ----------------- Borrar un contenido por su Id-------------------------
     @DeleteMapping(value="")
@@ -90,9 +96,15 @@ public class ContenidoCtrl_API {
         ));
         cont.setTipo(Byte.valueOf(params.get("tipo")));
         cont.setUrlFoto(StringUtils.cleanPath(foto.getOriginalFilename()));
-        String dirSubida = "fotos/u" + Long.valueOf(params.get("idUsuario")) + "_e" + Long.valueOf(params.get("idExcursion"));
-        String arch = StringUtils.cleanPath(foto.getOriginalFilename());
-        SubeArchivoUtil.grabaArchivo(dirSubida, arch, foto);
+        try {
+            String dirSubida = "fotos/u" + Long.valueOf(params.get("idUsuario")) + "_e" + Long.valueOf(params.get("idExcursion"));
+            String arch = StringUtils.cleanPath(foto.getOriginalFilename());
+            SubeArchivoUtil.grabaArchivo(dirSubida, arch, foto);
+            this.srvc.creaContenido(cont);
+        } catch (IOException e){
+            // TODO. Centalizar tratamiento de errores
+            e.printStackTrace();
+        }
 
         return params.entrySet().toString();
     }

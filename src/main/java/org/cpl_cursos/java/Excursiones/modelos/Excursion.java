@@ -43,7 +43,7 @@ public class Excursion {
     @OneToMany(mappedBy = "excur", fetch=FetchType.LAZY)
     private Set<Reserva> reservas;      // contiene todos los objetos Reserva que se ha hecho de la excursión
 
-    @OneToMany(mappedBy = "excurOpina", fetch=FetchType.LAZY)
+    @OneToMany(mappedBy = "excur", fetch=FetchType.LAZY)
     private Set<Contenido> contenidos;  // contiene todos los objetos Contenido de la excursión
 
 

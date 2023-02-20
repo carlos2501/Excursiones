@@ -18,7 +18,6 @@ public class Usuario {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-
     @NonNull
     private String emilio;
     private String nombre;
@@ -36,6 +35,6 @@ public class Usuario {
     @OneToMany(mappedBy = "usu", fetch=FetchType.LAZY)
     private Set<Reserva> reservas;  //contiene todas las reservas realizadas por el usuario
 
-    @OneToMany(mappedBy = "usuOpina", fetch=FetchType.LAZY)
-    private Set<Contenido> contenidos;  // contiene todas las opiniones y fotos subidas por el usuario
+    @OneToMany(mappedBy = "usu", fetch=FetchType.LAZY)
+    private Set<Contenido> contenidos;  // contiene todos los contenidos subidos por el usuario
 }

@@ -19,12 +19,12 @@ public class Reserva implements Serializable {
 
     @ManyToOne
     @MapsId("idUsuario")
-    @JoinColumn(name="idUsuario")
+    @JoinColumn(name="id_Usuario", referencedColumnName = "id")
     private Usuario usu;    // contiene el objeto Usuario que ha realizado la reserva
 
     @ManyToOne
     @MapsId("idExcursion")
-    @JoinColumn(name="idExcursion")
+    @JoinColumn(name="id_Excursion")
     private Excursion excur;  //// contiene el objeto Excursion que se ha reservado
 
     private Double precio;

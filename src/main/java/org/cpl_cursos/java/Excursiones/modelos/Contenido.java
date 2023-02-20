@@ -11,7 +11,7 @@ import java.io.Serializable;
 @Setter
 @ToString
 @Entity
-@Table(name = "Opiniones")
+@Table(name = "Contenidos")
 public class Contenido implements Serializable {
     @EmbeddedId
     private Contenido_PK contenido_PK;
@@ -19,15 +19,15 @@ public class Contenido implements Serializable {
     @ManyToOne
     @MapsId("idUsuario")
     @JoinColumn(name="id_Usuario")
-    private Usuario usuOpina;
+    private Usuario usu;
 
     @ManyToOne
     @MapsId("idExcursion")
     @JoinColumn(name="id_Excursion")
-    private Excursion excurOpina;
+    private Excursion excur;
 
     private String opinion;
     private Byte puntuacion;
-    private Byte tipo; // Opinión , foto u otros datos futuros que sean compartidos por Usuario y Excursión
+    private Byte tipo; // Opinión (1), foto (2) u otros datos futuros que sean compartidos por Usuario y Excursión
     private String urlFoto;
 }
