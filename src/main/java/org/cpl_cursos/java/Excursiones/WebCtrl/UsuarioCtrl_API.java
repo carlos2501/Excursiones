@@ -2,12 +2,12 @@ package org.cpl_cursos.java.Excursiones.WebCtrl;
 
 import org.cpl_cursos.java.Excursiones.modelos.Usuario;
 import org.cpl_cursos.java.Excursiones.servicios.UsuarioSrvcImpl;
+import org.hibernate.annotations.Parameter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
 import java.util.Set;
 
 @RestController
@@ -26,12 +26,20 @@ public class UsuarioCtrl_API {
 
         Cada uno indica la ruta que "atiende" y el verbo de la misma (GET, POST, etc.)
     */
-    @GetMapping("")  // es la raiz de la ruta indicada en @RequestMapping
+    @GetMapping({"","/"})  // es la raiz de la ruta indicada en @RequestMapping
     public ResponseEntity<Set<Usuario>> listaUsuarios() {
         Set<Usuario> listaUsu = this.srvc.listarTodos();
         if(listaUsu.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<>(listaUsu, HttpStatus.OK);
+    }
+    @GetMapping("/{id}")
+    public Optional<Usuario> buscaUsuarioPorId(@PathVariable Long id) {
+        return this.srvc.buscarPorId(id);
+    }
+
+    @PostMapping({"","/"})
+    public void guardarUsuario(){
     }
 }
