@@ -53,7 +53,7 @@ public class UsuarioCtrl_API {
         return "Eliminado el usuario " + usu.getId();
     }
     // ----------------- Borrar usuarios en bloque -------------------------
-    @DeleteMapping(value="/borravarios")
+    @DeleteMapping(value="/borrarvarios")
     @ResponseBody
     public String borrarUsuarios(@RequestBody Set<Usuario> usus) {
         this.srvc.eliminarSet(usus);
@@ -68,7 +68,7 @@ public class UsuarioCtrl_API {
         return usu;
     }
     // ----------------- Guardar usuarios en bloque -------------------------
-    @PostMapping(value="/guardavarios")
+    @PostMapping(value="/guardarvarios")
     @ResponseBody
     public String guardaUsuarios(@RequestBody Set<Usuario> usus) {
         // los datos llegan en formato JSON
